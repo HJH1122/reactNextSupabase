@@ -3,6 +3,7 @@ import styles from "./page.module.scss";
 import { Button } from "@/components/ui/button";
 import LabelCalendar from "@/components/common/calender/LabelCalendar";
 import Image from "next/image";
+import BasicBoard from "@/components/common/board/BasicBoard";
 
 function page() {
     return (
@@ -53,6 +54,7 @@ function page() {
                         />
                     </button>
                 </div>
+                <BasicBoard />
             </main>
         </div>
     );

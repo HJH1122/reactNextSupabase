@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Roboto } from "next/font/google";
 import "@/styles/globals.css";
 import SideNavigation from "@/components/common/navigation/SideNavigation";
+import { Toaster } from "@/components/ui/sonner";
 
 const roboto = Roboto({
     subsets: ["latin"],
@@ -23,6 +24,7 @@ export default function RootLayout({
             <body className={roboto.className}>
                 <SideNavigation />
                 {children}
+                <Toaster />
             </body>
         </html>
     );
