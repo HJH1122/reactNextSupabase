@@ -43,50 +43,24 @@ function page() {
     );
 
     const inserRowData = async (contents: BoardContent[]) => {
-        if (boards?.contents) {
-            const { data, error, status } = await supabase
-                .from("todos")
-                .update({
-                    contents: contents,
-                })
-                .eq("id", pathname.split("/")[2])
-                .select();
+        const { data, error, status } = await supabase
+            .from("todos")
+            .update({
+                contents: contents,
+            })
+            .eq("id", pathname.split("/")[2]);
 
-            if (error) {
-                console.log(error);
-                toast("에러가 발생했습니다.", {
-                    description: "콘솔 창에 출력된 에러를 확인하세요.",
-                });
-            }
-
-            if (status === 200) {
-                toast("추가완료", {
-                    description: "새로운 보드가 추가되었습니다.",
-                });
-                getData();
-            }
-        } else {
-            const { data, error, status } = await supabase
-                .from("todos")
-                .insert({
-                    contents: contents,
-                })
-                .eq("id", pathname.split("/")[2])
-                .select();
-
-            if (error) {
-                console.log(error);
-                toast("에러가 발생했습니다.", {
-                    description: "콘솔 창에 출력된 에러를 확인하세요.",
-                });
-            }
-
-            if (status === 201) {
-                toast("생성완료", {
-                    description: "새로운 보드가 생성되었습니다.",
-                });
-                getData();
-            }
+        if (error) {
+            console.log(error);
+            toast("에러가 발생했습니다.", {
+                description: "콘솔 창에 출력된 에러를 확인하세요.",
+            });
+        }
+        if (status === 204) {
+            toast("추가완료", {
+                description: "새로운 보드가 추가되었습니다.",
+            });
+            getData();
         }
     };
 
@@ -126,6 +100,8 @@ function page() {
             });
         }
     };
+
+    const onSave = () => {};
 
     useEffect(() => {
         getData();
@@ -188,7 +164,9 @@ function page() {
                 ) : (
                     <div className="flex flex-col items-center justify-start w-full h-full gap-4">
                         {boards?.contents.map((board: BoardContent) => {
-                            return <BasicBoard key={board.boardId} />;
+                            return (
+                                <BasicBoard key={board.boardId} data={board} />
+                            );
                         })}
                     </div>
                 )}
